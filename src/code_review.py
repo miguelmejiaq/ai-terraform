@@ -4,11 +4,12 @@ import sys
 
 OPENAI_KEY = os.getenv("OPENAI_KEY")
 OPENAI_URL = os.getenv("OPENAI_URL")
-
+REPO_URL = os.getenv("REPO_URL")
+OPENAI_AGENT = os.getenv("OPENAI_AGENT")
 CHAT_URL = f"{OPENAI_URL}/chat"
-
 DELIMITER = "__SCRIPT_END_MARKER__"
 OUTPUT_KEY = "message"
+PROMPT = f"Would you be able to validate the Confluence page Best practices and let me know if the repo {REPO_URL} is compliant based on the defined rules"
 
 output_path = os.environ.get('GITHUB_OUTPUT')
 if output_path is None:
@@ -21,10 +22,10 @@ headers = {
 }
 
 body = {
-    "model" : "saia:agent:716241b4-6c1c-49a4-8482-b353963108cd",
+    "model" : OPENAI_AGENT,
     "messages" : [{
         "role" : "user",
-        "content" : "Hi, what can you do?"
+        "content" : PROMPT
     }]
 }
 
