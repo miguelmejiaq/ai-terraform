@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  call_request_job:
+  build:
     runs-on: self-hosted
     
     steps:
@@ -24,7 +24,6 @@ jobs:
           python-version: '3.11' 
 
       - name: Install Dependencies
-        # This assumes your dependencies are in a file named requirements.txt
         run: pip install requests
 
       - name: Run Python script
