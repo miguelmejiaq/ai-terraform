@@ -27,4 +27,4 @@ jobs:
         run: pip install requests
 
       - name: Run Python script
-          run: python ./src/code_review.py
+        run: python ./src/code_review.py
