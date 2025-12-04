@@ -27,7 +27,7 @@ body = {
 
 chat_request = requests.post(CHAT_URL, headers=headers, json=body)
 response = chat_request.json()
-
+print(response)
 with open(output_path, 'a') as f:
     # 3. Write your outputs as key=value pairs, one per line
     f.write(f"message={response.get("choices")[0].get("message").get("content")}\n")
