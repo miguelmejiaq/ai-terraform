@@ -28,6 +28,12 @@ jobs:
 
       - name: Run Python script
         run: python ./src/code_review.py
+        id: open_ai_response
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           OPENAI_URL: ${{ secrets.OPENAI_URL }}
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: ${{ steps.open_ai_response.outputs.version }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
