@@ -19,6 +19,6 @@ body = {
     }
 }
 
-response = requests.post(url, headers=headers, json=body)
+response = requests.post(CHAT_URL, headers=headers, json=body)
 
 print(response.json())
