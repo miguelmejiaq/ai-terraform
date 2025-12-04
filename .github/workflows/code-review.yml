@@ -1,0 +1,31 @@
+name: PR code review
+
+on:
+  # This section defines the events that trigger the workflow
+  pull_request:
+    # Optional: You can specify which branches the PR must target
+    # to run the workflow.
+    branches:
+      - main
+
+jobs:
+  call_request_job:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout Repository
+        # Action to pull the code from the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        # Action to install a specific Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' 
+
+      - name: Install Dependencies
+        # This assumes your dependencies are in a file named requirements.txt
+        run: pip install requests
+
+      - name: Run Python script
+          run: python ./src/code_review.py
