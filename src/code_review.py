@@ -19,6 +19,6 @@ body = {
     }]
 }
 
-response = requests.post(CHAT_URL, headers=headers, json=body)
-
-print(response.json())
+chat_request = requests.post(CHAT_URL, headers=headers, json=body)
+response = chat_request.json()
+print(response.get("choices")[0].get("message").get("content"))
