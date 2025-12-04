@@ -28,3 +28,6 @@ jobs:
 
       - name: Run Python script
         run: python ./src/code_review.py
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          OPENAI_URL: ${{ secrets.OPENAI_URL }}
