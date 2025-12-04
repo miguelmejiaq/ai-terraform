@@ -7,6 +7,9 @@ OPENAI_URL = os.getenv("OPENAI_URL")
 
 CHAT_URL = f"{OPENAI_URL}/chat"
 
+DELIMITER = "__SCRIPT_END_MARKER__"
+OUTPUT_KEY = "message"
+
 output_path = os.environ.get('GITHUB_OUTPUT')
 if output_path is None:
     print("Error: GITHUB_OUTPUT environment variable is not set.", file=sys.stderr)
@@ -30,5 +33,10 @@ response = chat_request.json()
 message = response.get("choices")[0].get("message").get("content")
 with open(output_path, 'a') as f:
     # 3. Write your outputs as key=value pairs, one per line
-    f.write(f"message={message}\n")
+    # Format: key<<delimiter
+    f.write(f"{OUTPUT_KEY}<<{DELIMITER}\n")
+    # Write the multiline content
+    f.write(message.strip() + "\n")
+    # End with the delimiter on its own line
+    f.write(f"{DELIMITER}\n")
 print("Script finished with no issues")
