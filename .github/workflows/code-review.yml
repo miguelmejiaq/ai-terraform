@@ -1,0 +1,41 @@
+name: PR code review
+
+on:
+  # This section defines the events that trigger the workflow
+  pull_request:
+    # Optional: You can specify which branches the PR must target
+    # to run the workflow.
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout Repository
+        # Action to pull the code from the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        # Action to install a specific Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' 
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Python script
+        run: python ./src/code_review.py
+        id: open_ai_response
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          OPENAI_URL: ${{ secrets.OPENAI_URL }}
+          OPENAI_AGENT: ${{ secrets.OPENAI_AGENT }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: ${{ steps.open_ai_response.outputs.message }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
